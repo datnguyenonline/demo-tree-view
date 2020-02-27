@@ -52,22 +52,11 @@ button {
     padding: 10px;
 }
 
-._2L_AO {
+.item-node {
     position: relative;
 }
 
-._2cLYs {
-    --content-height: 5.25;
-    --toggle-height: 1.5;
-    --spacing: 1;
-    --stroke-width: 2;
-    --duration: 500ms;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-}
-
-._2cLYs {
+.item-wrapper {
     --content-height: 5.25;
     --toggle-height: 1.5;
     --spacing: 1;
@@ -79,20 +68,14 @@ button {
 }
 
 /*content container*/
-._3UNxK {
+.item-content-container {
     --elevation0:0 1px 1px rgba(0, 0, 0, 0.08);
     --elevation1:0 1px 4px rgba(0, 51, 73, 0.16);
     --elevation2:0 1px 4px rgba(0, 51, 73, 0.16), 0 8px 32px rgba(0, 51, 73, 0.08);
     --elevation: var(--elevation1);
     -webkit-box-shadow: var(--elevation);
     box-shadow: var(--elevation);
-}
-
-._3fK5H {
     --elevation: var(--elevation1);
-}
-
-.G5f3K {
     --height: 5.25;
     --width: 8.125;
     background: #fafbfc;
@@ -116,23 +99,11 @@ button {
 }
 
 /*button*/
-._1wIei {
+.btn-group-collapse {
     font-size: .75rem;
-}
-
-._1mBQ1, ._1wIei {
     line-height: 1.5em;
-}
-
-._18M12 {
     font-weight: 700;
-}
-
-._1ykqL {
     border-radius: 4px;
-}
-
-._1s_-P {
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
@@ -147,15 +118,9 @@ button {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-}
-
-._35weZ {
     border: 0;
     height: auto;
     padding: 0;
-}
-
-.GM2fp {
     --content-height: 5.25;
     background: #519de0;
     color: #fafbfc;
@@ -176,23 +141,22 @@ button {
 }
 
 /* child */
-._19BOU {
+.children-wrapper {
     margin-left: 6rem;
     position: relative;
 }
 
-._3Phhl {
+.child-item {
     -webkit-transition: opacity var(--duration);
     transition: opacity var(--duration);
 }
 
-.KyT_x+.KyT_x {
+.child-wrapper+.child-wrapper {
     margin-top: calc(var(--spacing)*1rem);
 }
 
 /* path */
-
-._2iQnq {
+.item-line-wrapper {
     --content-height: 5.25;
     fill: none;
     left: -3rem;
@@ -201,13 +165,13 @@ button {
     stroke-width: var(--stroke-width);
     top: calc(var(--content-height)*0.5rem - var(--toggle-height)*0.5rem);
 }
-.r2O7n {
+.item-line-strange {
     -webkit-animation: _ani 0s linear forwards;
     animation: _ani 0s linear forwards;
     left: -6rem;
 }
 
-._2iQnq path {
+.item-line-wrapper path {
     -webkit-animation: _ani calc(var(--duration)*7.5) linear forwards;
     animation: _ani calc(var(--duration)*7.5) linear forwards;
     stroke-dasharray: 10000;

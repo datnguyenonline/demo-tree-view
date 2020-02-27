@@ -2,7 +2,7 @@ var width = 48;
 
 function collapseChild(element, num) {
 	if (!$(element).hasClass('opened')) {
-		var html = '<div class="_19BOU">';
+		var html = '<div class="children-wrapper">';
 		var idList = [];
 		for (var i = 0; i < num; i++) {
 			var j = (i - 2) >= 0? i : 0;
@@ -15,24 +15,24 @@ function collapseChild(element, num) {
 				var path = 'M' + c[0].x + ',' + c[0].y + ' C' + c[1].x + ',' + c[1].y + ' ' + c[2].x + ',' + c[2].y + ' ' + c[3].x + ',' + c[3].y;
 
 			var id = makeID(5);
-			html += '<div class="KyT_x">';
-			html += '<div class="_3Phhl _3Phhl-appear-done _3Phhl-enter-done">';
-			html += '<svg class="_2iQnq';
+			var newNum = randomNumber();
+			html += '<div class="child-wrapper">';
+			html += '<div class="child-item">';
+			html += '<svg class="item-line-wrapper';
 			if (i == 0)
-				html += ' r2O7n';
-
+				html += ' item-line-strange';
 			html += '" height="'+height+'" width="96">';
 			html += '<path d="'+path+'"></path>';
 			html += '</svg>';
-			html += '<div class="_2cLYs">';
-			html += '<div class="_2L_AO">';
-			html += '<div class="G5f3K _3fK5H _3UNxK" id="draggable_'+id+'" draggable="true">';
-			html += '<div class="_1pGPA">';
-			html += 'This is test '+ (i + 1);
+			html += '<div class="item-wrapper">';
+			html += '<div class="item-node" id="draggable_'+id+'" draggable="true">';
+			html += '<div class="item-content-container">';
+			html += '<div class="item-content">';
+			html += 'This is test '+ (i + 1) + '<br>Total: '+ newNum;
 			html += '</div>';
 			html += '</div>';
-			var newNum = randomNumber();
-			html += '<button class="GM2fp _35weZ _1s_-P _1ykqL _1wIei _18M12" type="button" onclick="collapseChild(this,'+newNum+')">'+newNum+' &gt;</button>';
+			
+			html += '<button class="btn-group-collapse" type="button" onclick="collapseChild(this,'+newNum+')">'+newNum+' &gt;</button>';
 			html += '</div>';
 			html += '</div>';
 			html += '</div>';
@@ -60,7 +60,7 @@ function collapseChild(element, num) {
 
 function updateParent(element) {
 	var parent = $(element).parent().parent().parent().parent();
-	if ($(parent).attr('class') == 'KyT_x') {
+	if ($(parent).attr('class') == 'child-wrapper') {
 		updateLine($(parent));
 		updateParent($(parent));
 	}
@@ -107,32 +107,26 @@ function initDraggable(element_id) {
 		accept: $['id^="draggable_"'],
 	    drop: function(event, ui)
 	    {
-	    	// has child opened
-	    	if ($(ui.draggable).parent().next().is('div')) {
-	    		$(ui.draggable).parent().next().remove();
-	    		$(ui.draggable).parent().find('button').removeClass('opened');
-	    		updateParent(ui.draggable);
+	    	if ($(ui.draggable).next().is('div')) {
+	    		$(ui.draggable).next().remove();
+	    		$(ui.draggable).children('button').removeClass('opened');
+	    		updateParent($(ui.draggable).children('button'));
 	    	}
-	    	if ($(element).parent().next().is('div')) {
-	    		$(element).parent().next().remove();
-	    		$(ui.draggable).parent().find('button').removeClass('opened');
-	    		updateParent(element);
+	    	if ($(element).next().is('div')) {
+	    		$(element).next().remove();
+	    		$(element).children('button').removeClass('opened');
+	    		updateParent($(element).children('button'));
 	    	}
 
 	    	// swap content and button
-	    	var source = $(ui.draggable).parent().parent().parent().parent();
+	    	var source = $(ui.draggable).parent().parent().parent();console.log(source);
 	    	$.each(source.parent().children(), function(index, value) {
-	    		if (element_id == $(value).children().children().children().children().attr('id')){
-	    			$(ui.draggable).css({ "left": "0", "top": "0" });
-	    			$(ui.draggable).removeClass('ui-draggable-dragging');
-			        var copy_to = $(element).parent().html();
-			        var copy_from = $(ui.draggable).parent().html();
-			        var parent_to = $(ui.draggable).parent();
-			        var parent_from = $(element).parent();
-			        parent_to.html(copy_to);
-			        parent_from.html(copy_from);
-			        initDraggable(element_id);
-			        initDraggable(ui.draggable[0].id);
+	    		console.log($(value).children().children().children()[1].id);
+	    		if (element_id == $(value).children().children().children()[1].id){
+			        var copy_to = $(element).html();
+			        var copy_from = $(ui.draggable).html();
+			        $(ui.draggable).html(copy_to);
+	    			$(element).html(copy_from);
 				}
 	    	});
 	    }
