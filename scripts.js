@@ -1,10 +1,10 @@
 var width = 48;
 
-function collapseChild(element) {
+function collapseChild(element, num) {
 	if (!$(element).hasClass('opened')) {
 		var html = '<div class="_19BOU">';
 		var idList = [];
-		for (var i = 0; i < 4; i++) {
+		for (var i = 0; i < num; i++) {
 			var j = (i - 2) >= 0? i : 0;
 			var height = 24 + (87 * i) + (10 * j);
 			var line = [{x:0, y:12}, {x:96, y:12}];
@@ -24,14 +24,15 @@ function collapseChild(element) {
 			html += '" height="'+height+'" width="96">';
 			html += '<path d="'+path+'"></path>';
 			html += '</svg>';
-			html += '<div class="_2cLYs" style="--content-height:10.5;">';
+			html += '<div class="_2cLYs">';
 			html += '<div class="_2L_AO">';
 			html += '<div class="G5f3K _3fK5H _3UNxK" id="draggable_'+id+'" draggable="true">';
 			html += '<div class="_1pGPA">';
 			html += 'This is test '+ (i + 1);
 			html += '</div>';
 			html += '</div>';
-			html += '<button class="GM2fp _35weZ _1s_-P _1ykqL _1wIei _18M12" type="button" onclick="collapseChild(this)">4 &gt;</button>';
+			var newNum = randomNumber();
+			html += '<button class="GM2fp _35weZ _1s_-P _1ykqL _1wIei _18M12" type="button" onclick="collapseChild(this,'+newNum+')">'+newNum+' &gt;</button>';
 			html += '</div>';
 			html += '</div>';
 			html += '</div>';
@@ -83,6 +84,10 @@ function updateLine(element) {
 
 }
 
+function randomNumber() {
+	return Math.floor((Math.random() * 5) + 1);
+}
+
 function makeID(length) {
    var result           = '';
    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -114,13 +119,20 @@ function initDraggable(element_id) {
 	    		updateParent(element);
 	    	}
 
+	    	// swap content and button
 	    	var source = $(ui.draggable).parent().parent().parent().parent();
 	    	$.each(source.parent().children(), function(index, value) {
 	    		if (element_id == $(value).children().children().children().children().attr('id')){
-	    			var copy_to = $(element).html();
-			        var copy_from = $(ui.draggable).html();
-			        $(ui.draggable).html(copy_to);
-			        $(element).html(copy_from);
+	    			$(ui.draggable).css({ "left": "0", "top": "0" });
+	    			$(ui.draggable).removeClass('ui-draggable-dragging');
+			        var copy_to = $(element).parent().html();
+			        var copy_from = $(ui.draggable).parent().html();
+			        var parent_to = $(ui.draggable).parent();
+			        var parent_from = $(element).parent();
+			        parent_to.html(copy_to);
+			        parent_from.html(copy_from);
+			        initDraggable(element_id);
+			        initDraggable(ui.draggable[0].id);
 				}
 	    	});
 	    }
