@@ -101,17 +101,25 @@ function makeID(length) {
 function initDraggable(element_id) {
 	var element = '#' + element_id;
 	$(element).draggable({
-		revert: true
+		revert: true,
+		start: function(event, ui) {
+			if ($(element).next().is('div')) {
+	    		$(element).next().remove();
+	    		$(element).children('button').removeClass('opened');
+	    		updateParent($(element).children('button'));
+	    	}
+		}
 	});
 	$(element).droppable({
 		accept: $['id^="draggable_"'],
 	    drop: function(event, ui)
 	    {
-	    	if ($(ui.draggable).next().is('div')) {
-	    		$(ui.draggable).next().remove();
-	    		$(ui.draggable).children('button').removeClass('opened');
-	    		updateParent($(ui.draggable).children('button'));
-	    	}
+	    	// remove children
+	    	// if ($(ui.draggable).next().is('div')) {
+	    	// 	$(ui.draggable).next().remove();
+	    	// 	$(ui.draggable).children('button').removeClass('opened');
+	    	// 	updateParent($(ui.draggable).children('button'));
+	    	// }
 	    	if ($(element).next().is('div')) {
 	    		$(element).next().remove();
 	    		$(element).children('button').removeClass('opened');
@@ -119,9 +127,8 @@ function initDraggable(element_id) {
 	    	}
 
 	    	// swap content and button
-	    	var source = $(ui.draggable).parent().parent().parent();console.log(source);
+	    	var source = $(ui.draggable).parent().parent().parent();
 	    	$.each(source.parent().children(), function(index, value) {
-	    		console.log($(value).children().children().children()[1].id);
 	    		if (element_id == $(value).children().children().children()[1].id){
 			        var copy_to = $(element).html();
 			        var copy_from = $(ui.draggable).html();
